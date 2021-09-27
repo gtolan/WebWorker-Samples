@@ -1,6 +1,10 @@
+console.log('FEtch WEbworker')
+
 //Check for fetch and polyfil if not available
 if (self.fetch || (self.importScripts("https://cdnjs.cloudflare.com/ajax/libs/native-promise-only/0.8.1/npo.js"), self.importScripts("https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js")), !self.fetch) {
-	fetch = function (e, t) {
+
+fetch = function (e, t) {
+	console.log('FEtch WEbworker FFF')
 		var s = new XMLHttpRequest,
 			a = t.method || "GET";
 		t.mode;
@@ -38,6 +42,7 @@ if (self.fetch || (self.importScripts("https://cdnjs.cloudflare.com/ajax/libs/na
 //Start the fetch worker listener..
 
 self.addEventListener("message", function (e) {
+	console.log('FEtch WEbworker MESS')
 	if ("fetch" === e.data.action) {
         var options = {
                         method: "GET",
@@ -50,7 +55,7 @@ self.addEventListener("message", function (e) {
       			filter = e.data.filter,
       			requrl = url + filter;
 
-              //console.log("fetch webworker..url", requrl);
+              console.log("fetch webworker..url", requrl);
 
               fetch(requrl, options).then(function (res) {
           			if (res.ok) return res.text();

@@ -6,12 +6,12 @@ var networking = {
                 console.log('init fetch WebWorker')
                 var myWorker = new Worker('/fetch_webworker.js');
                 myWorker.onerror = function(){
-                        fetchArticles.XMLWebWorker(url,filter);
+                        networking.XMLWebWorker(url,filter);
                 }
 
                 var action = {action: "fetch",
                               url: url,
-                              filter: filter
+                              filter: filter || ''
                               };
 
                 myWorker.postMessage(action);
@@ -19,16 +19,17 @@ var networking = {
 
                     var webworkerResult = e.data.result;
                     if(webworkerResult === "fail"){
-                            return fetchArticles.XMLWebWorker(url,filter);
+                      console.log('fetch WW fail')
+                            return networking.XMLWebWorker(url,filter);
                     }else if(webworkerResult === "success"){
                             //do stuff with result
                             var fetchedData = e.data.reqData;
-                            return fetchArticles.loadDataSuccess(fetchedData, "webworker")
+                            return networking.loadDataSuccess(fetchedData, "webworker")
                     }
                  })
 
               }else {
-                return fetchArticles.XMLWebWorker(url,filter);
+                return networking.XMLWebWorker(url,filter);
               }
           },
 
@@ -38,7 +39,7 @@ var networking = {
                 console.log('init WebWorker')
       					var myWorker = new Worker('/xml_webworker.js');
       					myWorker.onerror = function(){
-      						      fetchArticles.mainThreadXML(url,filter);
+      						      networking.mainThreadXML(url,filter);
       					}
 
       					var action = {action: "any-action-name",
@@ -51,16 +52,16 @@ var networking = {
 
       							var webworkerResult = e.data.result;
       							if(webworkerResult === "fail"){
-      											return fetchArticles.mainThreadXML(url,filter);
+      											return networking.mainThreadXML(url,filter);
       							}else if(webworkerResult === "success"){
       											//do stuff with result
       											var fetchedData = e.data.reqData;
-      											return fetchArticles.loadDataSuccess(fetchedData, "webworker")
+      											return networking.loadDataSuccess(fetchedData, "webworker")
       							}
       					 })
 
       				}else {
-      					return fetchArticles.mainThreadXML(url,filter);
+      					return networking.mainThreadXML(url,filter);
       				}
       		},
 
@@ -73,11 +74,11 @@ var networking = {
       					if (xhttp.readyState === xhttp.DONE) {
 
       							        if (xhttp.status === 200) {
-      											              return fetchArticles.loadDataSuccess(result, "main-thread-xml")
+      											              return networking.loadDataSuccess(result, "main-thread-xml")
       											}
 
       										  if (xhttp.status === 400) {
-                                          return fetchArticles.loadDataFail(result, "main-thread-xml")
+                                          return networking.loadDataFail(result, "main-thread-xml")
       										  }
       					}
       			}
@@ -95,3 +96,5 @@ var networking = {
           }
 
       }
+      var url = 'https://jsonplaceholder.typicode.com/todos/1'
+      networking.fetchWebworker(url)

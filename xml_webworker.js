@@ -26,6 +26,7 @@ self.addEventListener('message', function(event){
     } else if (event.data.action === "some-other-action") {
 
         //some other Request..
+     console.log('some-other-action')
 
     }
 
