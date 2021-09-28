@@ -1,11 +1,9 @@
-# Delivery Comparison
+# 2017 - explore webworkers 
 
-## POJO - Progressive Web App 
 ```
-2017 - explore webworkers 
 
 Webworkers: sample on git pages
-https://gtolan.github.io/my-first-portfolio/
+https://gtolan.github.io/WebWorker-Samples/
 
 Use heroku proxy for CORs requests
 Using fetch/polyfil and XML fallback
