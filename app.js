@@ -86,15 +86,29 @@ var networking = {
       		},
 
           loadDataSuccess:function(result, service){
-              var resDiv = document.getElementById('fetch_result');
+              var resDiv = document.getElementById('fetchResult');
               resDiv.innerHTML = "Success! We recieved this text:" + result + "from " + service;
           },
 
           loadDataFail:function(result, service){
-              var resDiv = document.getElementById('fetch_result');
+              var resDiv = document.getElementById('fetchResult');
               resDiv.innerHTML = "Error: We recieved this text:" + result + "from " + service;
           }
 
       }
-      var url = 'https://jsonplaceholder.typicode.com/todos/1'
-      networking.fetchWebworker(url)
+
+      // var url = 'https://jsonplaceholder.typicode.com/todos/1' ||
+      // networking.fetchWebworker(url)
+
+      var useWebWorker = function(e) { 
+        e.preventDefault()
+        var url = e.firstElementChild?.value || 'https://jsonplaceholder.typicode.com/todos/1';
+        networking.fetchWebworker(url)
+      }
+
+      var searchForm = document.getElementById('searchForm');
+      searchForm.addEventListener('submit', useWebWorker);
+
+
+      
+      
